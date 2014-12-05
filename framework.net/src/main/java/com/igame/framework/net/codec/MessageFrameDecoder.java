@@ -12,11 +12,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @ClassName: MessageFrameDecoder
- * @Package com.heygam.net.codec
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月5日 下午2:41:35
  * @Description: 解析数据包
- * @Version V1.0
  */
 public class MessageFrameDecoder extends ByteToMessageDecoder {
 	public static Logger logger = LoggerFactory.getLogger(MessageFrameDecoder.class);

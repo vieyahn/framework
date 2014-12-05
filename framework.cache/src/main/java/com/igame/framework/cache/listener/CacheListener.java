@@ -1,9 +1,12 @@
 package com.igame.framework.cache.listener;
 
 /**
- * LRU缓存监听器
- * 
- * @author Rjx
+ * @ClassName: CacheListener   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:10:20  
+ * @Description: LRU缓存监听器
+ * @param <K>
+ * @param <V>
  */
 public interface CacheListener<K, V> {
 

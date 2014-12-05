@@ -16,7 +16,6 @@ public class ConcurrentRunnable<K> {
 	public void executeTask(final K key, final Runnable _task, Executor executor) {
 		final FutureTask<?> futureTask = new FutureTask<Object>(new Callable<Object>() {
 			public Object call() throws Exception {
-				System.out.println("========= executeTask call =============");
 				try {
 					// 执行任务
 					_task.run();
@@ -29,12 +28,10 @@ public class ConcurrentRunnable<K> {
 		});
 		boolean interrupted = false;
 		try {
-			for (;;) {//确保同一个key值的task 不会同时执行
-				System.out.println("========= executeTask ********** =============");
-				
+			for (;;) {// 确保同一个key值的task 不会同时执行
+
 				FutureTask<?> old = this.tasks.putIfAbsent(key, futureTask);
 				if (old == null) {
-					System.out.println("========= executeTask new =============");
 					if (executor != null) {
 						executor.execute(futureTask);
 					} else {
@@ -47,10 +44,8 @@ public class ConcurrentRunnable<K> {
 							throw new RuntimeException(ex);
 						}
 					}
-					System.out.println("========= executeTask new end =============");
 					break;
 				} else {
-					System.out.println("========= executeTask old =============");
 					try {
 						old.get();
 					} catch (InterruptedException e) {
@@ -63,7 +58,6 @@ public class ConcurrentRunnable<K> {
 			}
 		} finally {
 			if (interrupted) {
-				System.out.println("========= executeTask interrupted =============");
 				Thread.currentThread().interrupt();
 			}
 		}

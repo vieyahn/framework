@@ -14,11 +14,9 @@ import com.google.common.cache.RemovalNotification;
 
 /**
  * @Title: SessionCache.java
- * @Package com.igame.framework.net
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年9月12日 下午1:28:51
  * @Description: channel session 映射关系缓存
- * @Version V1.0
  */
 public final class SessionCache {
 	// expireAfterAccess(long, TimeUnit) 这个方法是根据某个键值对最后一次访问之后多少时间后移除
@@ -28,21 +26,22 @@ public final class SessionCache {
 	private static final ConcurrentMap<String, Session> token2Session = new ConcurrentHashMap<String, Session>();
 
 	// 玩家id对应session键值缓存
-	private static final LoadingCache<Long, Session> cache = CacheBuilder.newBuilder().maximumSize(maximumSize).expireAfterAccess(2, TimeUnit.HOURS).removalListener(new RemovalListener<Long, Session>() {
-		@Override
-		public void onRemoval(RemovalNotification<Long, Session> rn) {
-			String token = rn.getValue().getToken();
-			if (token != null)
-				token2Session.remove(token);
+	private static final LoadingCache<Long, Session> cache = CacheBuilder.newBuilder().maximumSize(maximumSize).expireAfterAccess(2, TimeUnit.HOURS)
+			.removalListener(new RemovalListener<Long, Session>() {
+				@Override
+				public void onRemoval(RemovalNotification<Long, Session> rn) {
+					String token = rn.getValue().getToken();
+					if (token != null)
+						token2Session.remove(token);
 
-			rn.getValue().unbind();
-		}
-	}).build(new CacheLoader<Long, Session>() {
-		@Override
-		public Session load(Long key) throws Exception {
-			return null;
-		}
-	});
+					rn.getValue().unbind();
+				}
+			}).build(new CacheLoader<Long, Session>() {
+				@Override
+				public Session load(Long key) throws Exception {
+					return null;
+				}
+			});
 
 	public static long size() {
 		return cache.size();

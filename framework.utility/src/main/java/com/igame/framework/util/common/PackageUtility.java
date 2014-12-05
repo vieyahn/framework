@@ -15,10 +15,11 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.SystemPropertyUtils;
 
-/**
- * 类包工具类
- * 
- * @author zhujuan
+/**  
+ * @ClassName: PackageUtility   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:02:57  
+ * @Description: 类包工具类
  */
 public class PackageUtility {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PackageUtility.class);

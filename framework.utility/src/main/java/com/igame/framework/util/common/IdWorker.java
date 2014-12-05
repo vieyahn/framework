@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Title: IdWorker.java
- * @Package com.heygam.boot
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年5月26日 下午12:06:40
  * @Description: 核心代码为其IdWorker这个类实现，其原理结构如下，我分别用一个0表示一位，用—分割开部分的作用： 1

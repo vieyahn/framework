@@ -2,13 +2,11 @@ package com.igame.framework.basedb;
 
 import java.util.Iterator;
 
-/**
- * @Title: ResourceReader.java
- * @Package com.igame.framework.basedb
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年9月22日 下午4:30:42
- * @Description: 资源加载接口
- * @Version V1.0
+/**  
+ * @ClassName: ResourceReader   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:58:08  
+ * @Description: 资源加载接口   
  */
 public interface ResourceReader {
 

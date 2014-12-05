@@ -11,7 +11,6 @@ import com.igame.framework.rpc.CommandContext;
 
 /**
  * @Title: CommandValidatedService.java
- * @Package com.heygam.net.component
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月13日 下午5:12:38
  * @Description: 命令码登录校验

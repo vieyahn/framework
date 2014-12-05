@@ -3,7 +3,6 @@ package com.igame.framework.net.exception;
 
 /**
  * @Title: ReLoginException.java
- * @Package com.heygam.net.exception
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年5月26日 下午6:07:17
  * @Description:重新登录

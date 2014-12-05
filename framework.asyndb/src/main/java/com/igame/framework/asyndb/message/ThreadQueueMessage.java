@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * @ClassName: ThreadQueueMessage
- * @Package com.heygam.common.sql
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月8日 上午11:42:13
  * @Description: sql 线程缓存

@@ -21,12 +21,11 @@ import io.netty.channel.socket.SocketChannel;
 
 /**
  * @ClassName: serverInitializer
- * @Package com.heygam.net.core
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月6日 下午3:41:18
  * @Description: 将编码器、解码器添加到channelPipeline
- * @Version V1.0
  */
+@Deprecated
 public abstract class ServerInitializer extends ChannelInitializer<SocketChannel> {
 
 	// private Object portUnificationHandler = createHandler();

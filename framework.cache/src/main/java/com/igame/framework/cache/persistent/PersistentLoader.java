@@ -3,12 +3,12 @@ package com.igame.framework.cache.persistent;
 import java.util.List;
 
 /**
- * <pre>
- * 持久化加载器
- * 包括加载、删除、更新、插入操作操作
- * </pre>
- * 
- * @author Rjx
+ * @ClassName: PersistentLoader
+ * @Author: Allen allen.ime@gmail.com
+ * @Date: 2014年12月5日 下午12:10:00
+ * @Description: 持久化加载器 包括加载、删除、更新、插入操作操作
+ * @param <K>
+ * @param <V>
  */
 public interface PersistentLoader<K, V> {
 

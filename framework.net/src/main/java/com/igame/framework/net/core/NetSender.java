@@ -7,11 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Title: NetSender.java
- * @Package com.igame.framework.net.core
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年10月21日 下午2:18:10
  * @Description: 消息发送器
- * @Version V1.0
  */
 public class NetSender {
 	public static final Logger logger = LoggerFactory.getLogger(NetSender.class);

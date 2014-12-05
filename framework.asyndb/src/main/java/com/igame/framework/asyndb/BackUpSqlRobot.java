@@ -25,7 +25,6 @@ import com.igame.framework.asyndb.sender.ISqlSender;
 
 /**
  * @ClassName: SqlRobot
- * @Package com.heigam.common.sql
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月4日 下午7:46:48
  * @Description: sql管理器(每次都写文件备份)

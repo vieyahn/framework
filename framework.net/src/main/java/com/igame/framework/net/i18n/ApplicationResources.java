@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Title: ApplicationResources.java
- * @Package com.heygam.game.component
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年5月16日 上午11:44:21
  * @Description: 国际化处理

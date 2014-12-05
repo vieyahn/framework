@@ -18,12 +18,10 @@ import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 
 /**
- * @Title: Dispatcher.java
- * @Package com.heygam.disruptor
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年4月11日 下午12:58:39
+ * @ClassName: ADisruptorDispatcher
+ * @Author: Allen allen.ime@gmail.com
+ * @Date: 2014年12月5日 上午11:59:47
  * @Description: 任务分发接口
- * @Version V1.0
  */
 public abstract class ADisruptorDispatcher implements DispatcherListener {
 	public static final Logger logger = LoggerFactory.getLogger(ADisruptorDispatcher.class);
@@ -71,11 +69,11 @@ public abstract class ADisruptorDispatcher implements DispatcherListener {
 			public Thread newThread(Runnable r) {
 				Thread t = new Thread(r, (executorName == null ? "Default-ringbuffer" : executorName) + "-" + counter.getAndIncrement());
 				t.setDaemon(true);
-//				t.setPriority(Thread.MAX_PRIORITY);
+				// t.setPriority(Thread.MAX_PRIORITY);
 				return t;
 			}
 		};
-		
+
 		if (thread_size < 2) {
 			executor = Executors.newSingleThreadExecutor(threadFactory);
 		} else {

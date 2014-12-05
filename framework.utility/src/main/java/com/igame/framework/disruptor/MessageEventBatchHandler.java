@@ -5,13 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import com.lmax.disruptor.EventHandler;
 
-/**
- * @Title: MessageEventBatchHandler.java
- * @Package com.heygam.disruptor.handler
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年4月11日 下午1:00:17
- * @Description: 消息处理器抽象 并行消费
- * @Version V1.0
+/**  
+ * @ClassName: MessageEventBatchHandler   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:01:06  
+ * @Description: 消息处理器抽象 并行消费   
  */
 public class MessageEventBatchHandler implements EventHandler<Event> {
 	private static final Logger LOG = LoggerFactory.getLogger(MessageEventBatchHandler.class);

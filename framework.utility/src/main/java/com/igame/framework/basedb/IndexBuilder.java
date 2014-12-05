@@ -11,13 +11,11 @@ import java.util.Map;
 import org.springframework.util.ReflectionUtils;
 
 import com.igame.framework.basedb.annotation.Index;
-/**   
- * @Title: IndexBuilder.java
- * @Package com.igame.framework.basedb
- * @Author Allen allen.ime@gmail.com  
- * @Date 2014年9月29日 下午6:02:30
- * @Description: 索引生成器
- * @Version V1.0   
+/**  
+ * @ClassName: IndexBuilder   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:57:27  
+ * @Description: 索引生成器   
  */
 public class IndexBuilder {
 

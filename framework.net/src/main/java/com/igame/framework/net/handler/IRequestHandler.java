@@ -6,7 +6,6 @@ import com.igame.framework.rpc.CommandContext;
 
 /**
  * @Title: IDispatchService.java
- * @Package com.heygam.net.component
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月13日 下午4:47:21
  * @Description: 请求处理器

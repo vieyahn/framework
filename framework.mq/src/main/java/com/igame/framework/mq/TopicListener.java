@@ -17,7 +17,6 @@
 
 package com.igame.framework.mq;
 
-
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -33,27 +32,24 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Topic 消息接收
- * @ClassName: TopicListener  
- * @Package com.heigam.common.mq 
- * @Author Allen allen.ime@gmail.com  
+ * @ClassName: TopicListener
+ * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月5日 上午10:45:24
- * @Description: 
- * Use in conjunction with TopicPublisher to test the performance of ActiveMQ Topics. 
- * @Version V1.0
+ * @Description:
  */
-public class TopicListener implements MessageListener {
+public abstract class TopicListener implements MessageListener {
 	private static final Logger log = LoggerFactory.getLogger(TopicListener.class);
 	private Connection connection;
 	private Session session;
 	private Topic topic;
-	private int logicserver; //当前服务器id
+	private int logicserver; // 当前服务器id
 
 	public TopicListener(String user, String password, String url, String subject) throws JMSException {
-		
+
 		ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(user, password, url);
 		connection = factory.createConnection();
 		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		topic = session.createTopic(subject+logicserver);
+		topic = session.createTopic(subject + logicserver);
 
 		MessageConsumer consumer = session.createConsumer(topic);
 		consumer.setMessageListener(this);
@@ -66,7 +62,8 @@ public class TopicListener implements MessageListener {
 		try {
 			ObjectMessage objectMessage = (ObjectMessage) message;
 			String mqObject = (String) objectMessage.getObject();
-			//TODO 接收到消息进行处理
+			// TODO 接收到消息进行处理
+			hander(mqObject);
 		} catch (Exception e) {
 			log.error("TopicListener error ", e);
 		}
@@ -77,5 +74,6 @@ public class TopicListener implements MessageListener {
 		this.logicserver = logicserver;
 	}
 
-	
+	public abstract void hander(String mqObject);
+
 }

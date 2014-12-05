@@ -1,12 +1,10 @@
 package com.igame.framework.disruptor;
 
-/**
- * @Title: DispatcherListener.java
- * @Package com.igame.queue.disruptor.Listener
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年5月29日 下午12:17:00
- * @Description: 任务调度
- * @Version V1.0
+/**  
+ * @ClassName: DispatcherListener   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:00:06  
+ * @Description: 任务调度 
  */
 public interface DispatcherListener {
 	/**

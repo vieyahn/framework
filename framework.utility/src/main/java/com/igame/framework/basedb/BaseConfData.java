@@ -17,13 +17,11 @@ import com.igame.framework.basedb.annotation.Conf;
 import com.igame.framework.basedb.util.Class2SqlUtil;
 import com.igame.framework.util.common.PackageUtility;
 
-/**
- * @Title: BaseConfData.java
- * @Package com.igame.framework.basedb
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年9月29日 下午6:01:23
+/**  
+ * @ClassName: BaseConfData   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:56:30  
  * @Description: 基本配置数据容器
- * @Version V1.0
  */
 public class BaseConfData {
 	private static final Logger logger = LoggerFactory.getLogger(BaseConfData.class);

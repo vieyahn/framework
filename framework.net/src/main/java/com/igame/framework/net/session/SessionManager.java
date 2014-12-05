@@ -13,11 +13,9 @@ import com.igame.framework.util.common.SecretUtil;
 
 /**
  * @ClassName: SessionManager
- * @Package com.heygam.net.service
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月10日 下午3:22:24
  * @Description: session 管理器
- * @Version V1.0
  */
 public class SessionManager {
 	private static final Logger logger = LoggerFactory.getLogger(SessionManager.class);

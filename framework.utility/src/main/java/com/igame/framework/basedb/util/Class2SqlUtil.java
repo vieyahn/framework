@@ -8,13 +8,11 @@ import java.util.Date;
 import com.igame.framework.basedb.annotation.CfgId;
 import com.igame.framework.util.common.DateUtil;
 
-/**
- * @Title: DBUtil.java
- * @Package com.igame.framework.basedb.util
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年9月29日 下午6:03:38
- * @Description: 数据库
- * @Version V1.0
+/**  
+ * @ClassName: Class2SqlUtil   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:59:13  
+ * @Description: 类-->sql 
  */
 public class Class2SqlUtil {
 

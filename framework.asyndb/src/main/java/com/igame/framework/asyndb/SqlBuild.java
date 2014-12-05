@@ -19,7 +19,6 @@ import com.igame.framework.util.common.DateUtil;
 
 /**
  * @ClassName: SqlBuild
- * @Package com.heygam.common.sql
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月8日 下午1:55:18
  * @Description: 运行期获取MyBatis执行的SQL(已加入参数)

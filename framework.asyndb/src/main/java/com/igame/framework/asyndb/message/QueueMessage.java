@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * @ClassName: QueueMessage
- * @Package com.heygam.common.mq.domain
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月10日 上午9:40:24
  * @Description: sqls

@@ -9,11 +9,9 @@ import com.igame.framework.net.constant.SessionKey;
 
 /**
  * @Title: Session.java
- * @Package com.igame.framework.net
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年9月12日 下午1:28:35
  * @Description: 会话缓存
- * @Version V1.0
  */
 public class Session extends DefaultAttributeMap implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +24,7 @@ public class Session extends DefaultAttributeMap implements Serializable {
 	// when channel close?
 	// private Notifier notifier; // 通知/事物驱动
 
-	//TODO 重连有待完善
+	// TODO 重连有待完善
 	public Session(Channel channel) {
 		this.ioSession = channel;
 		ioSession.attr(SessionKey.CONNECT_TIME).set(System.currentTimeMillis());

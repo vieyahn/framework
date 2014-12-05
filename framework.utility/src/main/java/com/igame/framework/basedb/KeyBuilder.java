@@ -2,13 +2,11 @@ package com.igame.framework.basedb;
 
 import org.springframework.util.StringUtils;
 
-/**   
- * @Title: KeyBuilder.java
- * @Package com.igame.framework.basedb
- * @Author Allen allen.ime@gmail.com  
- * @Date 2014年9月29日 下午6:02:42
- * @Description:键名生成器
- * @Version V1.0   
+/**  
+ * @ClassName: KeyBuilder   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:57:52  
+ * @Description: 键名生成器   
  */
 public class KeyBuilder {
     /**

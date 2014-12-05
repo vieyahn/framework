@@ -15,13 +15,11 @@ import com.igame.framework.rpc.annotation.BindCommand;
 import com.igame.framework.rpc.annotation.CommandWorker;
 import com.igame.framework.util.common.PackageUtility;
 
-/**
- * @Title: CommandManager.java
- * @Package com.heygam.net.command
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年5月17日 下午3:14:50
- * @Description: 指令码管理器
- * @Version V1.0
+/**  
+ * @ClassName: CommandManager   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:01:58  
+ * @Description: 指令码管理器  
  */
 public class CommandManager implements ApplicationContextAware {
 	private static final Logger log = LoggerFactory.getLogger(CommandManager.class);

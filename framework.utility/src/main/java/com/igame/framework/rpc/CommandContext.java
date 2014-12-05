@@ -2,13 +2,11 @@ package com.igame.framework.rpc;
 
 import java.lang.reflect.Method;
 
-/**
- * @Title: CommandContext.java
- * @Package com.igame.rpc
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年5月29日 下午5:23:57
- * @Description: 指令码上下文
- * @Version V1.0
+/**  
+ * @ClassName: CommandContext   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:01:44  
+ * @Description: 指令码上下文  
  */
 public class CommandContext {
 

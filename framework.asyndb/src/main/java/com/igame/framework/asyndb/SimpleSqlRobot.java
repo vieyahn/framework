@@ -30,7 +30,6 @@ import com.igame.framework.asyndb.sender.ISqlSender;
 
 /**
  * @Title: SimpleSqlRobot.java
- * @Package com.igame.framework.asyndb
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年9月17日 下午12:08:33
  * @Description: 不会实时写文件但是停止的时候等待重新发送的数据会备份

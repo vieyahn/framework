@@ -22,15 +22,14 @@ import com.igame.framework.net.constant.SessionKey;
 
 /**
  * @Title: MutiPotocalEncoder.java
- * @Package com.igame.framework.net.codec
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年9月12日 下午3:04:42
  * @Description: 多协议编码(适用于http websocket编码)
- * @Version V1.0
  */
 @Sharable
 public class MutiPotocalEncoder extends MessageToMessageEncoder<ByteBuf> {
 	private static final Logger log = LoggerFactory.getLogger(MutiPotocalEncoder.class);
+
 	@Override
 	protected void encode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
 		log.debug("MutiPotocalEncoder encode");

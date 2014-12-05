@@ -15,24 +15,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @ClassName: ConsumerTool  
- * @Package com.heygam.common.mq 
- * @Author Allen allen.ime@gmail.com  
+ * @ClassName: ConsumerTool
+ * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月10日 下午3:24:49
- * @Description: p2p消息的消费 
- * @Version V1.0
+ * @Description: p2p消息的消费
  */
 public class ConsumerTool implements MessageListener, ExceptionListener {
-	private static final Logger	log		= LoggerFactory.getLogger(ConsumerTool.class);
-	private boolean				running;
+	private static final Logger log = LoggerFactory.getLogger(ConsumerTool.class);
+	private boolean running;
 
-	private Session				session;
-	private Destination			destination;
-	private boolean				transacted;
+	private Session session;
+	private Destination destination;
+	private boolean transacted;
 	// durable为true的时候,需要配置clientID
-	private boolean				durable	= false;								// '是否持久化消息,默认是false
-	private String				clientId;
-	private int					ackMode	= Session.AUTO_ACKNOWLEDGE;
+	private boolean durable = false; // '是否持久化消息,默认是false
+	private String clientId;
+	private int ackMode = Session.AUTO_ACKNOWLEDGE;
 
 	// private String consumerName;
 
@@ -105,10 +103,10 @@ public class ConsumerTool implements MessageListener, ExceptionListener {
 			ObjectMessage objectMessage = (ObjectMessage) message;
 			String mqObject = (String) objectMessage.getObject();
 			if (mqObject != null) {
-//				JSONArray array = JSON.parseArray(mqObject);
-//				List<String> sqls = (List<String>) array.get(1);
-				//			MessageSql messageSql = MessageSql.parseFrom(mqObject.getContent());
-//				System.out.println(" 收到消息  *********** " + sqls);
+				// JSONArray array = JSON.parseArray(mqObject);
+				// List<String> sqls = (List<String>) array.get(1);
+				// MessageSql messageSql = MessageSql.parseFrom(mqObject.getContent());
+				// System.out.println(" 收到消息  *********** " + sqls);
 				// TODO 处理接收到的消息
 			}
 

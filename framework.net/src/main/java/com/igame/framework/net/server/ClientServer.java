@@ -13,11 +13,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Title: ClientServer.java
- * @Package com.igame.framework.net.server
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年10月21日 下午2:20:10
  * @Description: netty 网络链接客户端
- * @Version V1.0
  */
 public abstract class ClientServer extends Server {
 	private static final Logger log = LoggerFactory.getLogger(ClientServer.class);

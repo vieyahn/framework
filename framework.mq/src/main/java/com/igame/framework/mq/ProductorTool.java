@@ -17,11 +17,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @ClassName: ProductorTool
- * @Package com.heygam.common.mq
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月10日 下午3:25:11
  * @Description: 通过此类将消息发往ActiveMQ (点对点消息)
- * @Version V1.0
  */
 public class ProductorTool {
 	/**

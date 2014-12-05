@@ -30,11 +30,9 @@ import com.igame.framework.net.constant.SessionKey;
 
 /**
  * @Title: AbsPortUnificationHandler.java
- * @Package com.igame.net.codec
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年5月30日 下午2:00:52
  * @Description: 多协议支持 需要单例注入 采用spring lookup-method 效率不高 舍弃
- * @Version V1.0
  */
 @Deprecated
 public abstract class AbsPortUnificationHandler extends ByteToMessageDecoder implements IPortUnificationHandler {

@@ -14,11 +14,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Title: InnerServer.java
- * @Package com.igame.framework.net.boot
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年9月30日 下午5:16:02
  * @Description: 内网服务器
- * @Version V1.0
  */
 public abstract class InnerServer extends Server {
 	private int port = 9998;// 默认端口

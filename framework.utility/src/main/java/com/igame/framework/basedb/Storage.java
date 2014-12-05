@@ -14,13 +14,12 @@ import org.slf4j.helpers.MessageFormatter;
 
 import com.igame.framework.basedb.annotation.Conf;
 
-/**
- * @Title: Storage.java
- * @Package com.igame.framework.basedb
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年9月29日 下午6:03:02
+/**  
+ * @ClassName: Storage   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:58:29  
  * @Description: 基础数据仓库
- * @Version V1.0
+ * @param <V>  
  */
 public class Storage<V> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Storage.class);

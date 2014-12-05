@@ -10,11 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @ClassName: MessageLengthFiledEncoder
- * @Package com.heygam.net.codec
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月6日 下午3:37:38
  * @Description: 下发数据前添加长度
- * @Version V1.0
  */
 @Sharable
 public class MessageLengthFiledEncoder extends MessageToByteEncoder<ByteBuf> {

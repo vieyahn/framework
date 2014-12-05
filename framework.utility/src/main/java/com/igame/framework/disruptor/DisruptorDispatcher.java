@@ -7,12 +7,10 @@ import com.lmax.disruptor.ExceptionHandler;
 import com.lmax.disruptor.WorkHandler;
 
 /**
- * @Title: QueueDispatcher.java
- * @Package com.heygam.disruptor.boot
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年4月11日 下午12:59:26
+ * @ClassName: DisruptorDispatcher
+ * @Author: Allen allen.ime@gmail.com
+ * @Date: 2014年12月5日 下午12:00:22
  * @Description: 异步执行队列
- * @Version V1.0
  */
 public class DisruptorDispatcher extends ADisruptorDispatcher {
 	private static final Logger logger = LoggerFactory.getLogger(DisruptorDispatcher.class);
@@ -29,6 +27,7 @@ public class DisruptorDispatcher extends ADisruptorDispatcher {
 		super(thread_size, executorName);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void init(int thread_size) {
 		disruptor.handleExceptionsWith(new ExceptionHandler() {

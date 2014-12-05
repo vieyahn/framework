@@ -1,12 +1,10 @@
 package com.igame.framework.disruptor;
 
-/**
- * @Title: MessageEvent.java
- * @Package com.heygam.disruptor.event
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年4月11日 下午1:00:04
- * @Description: 消息事件
- * @Version V1.0
+/**  
+ * @ClassName: Event   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:00:49  
+ * @Description:消息事件  
  */
 public class Event {
 

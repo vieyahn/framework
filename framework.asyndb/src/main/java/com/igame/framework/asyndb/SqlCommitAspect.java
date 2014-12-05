@@ -7,7 +7,6 @@ import com.igame.framework.asyndb.message.ThreadQueueMessage;
 
 /**
  * @ClassName: SqlCommitInterceptor
- * @Package com.heygam.common.sql
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年3月8日 上午11:40:44
  * @Description: 声明一个sql处理切面，提交sql

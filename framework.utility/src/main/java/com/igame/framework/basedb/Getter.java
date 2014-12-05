@@ -1,12 +1,10 @@
 package com.igame.framework.basedb;
 
-/**   
- * @Title: Getter.java
- * @Package com.igame.framework.basedb
- * @Author Allen allen.ime@gmail.com  
- * @Date 2014年9月29日 下午6:01:16
- * @Description: 取值器
- * @Version V1.0   
+/**  
+ * @ClassName: Getter   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:56:57  
+ * @Description: 取值器   
  */
 public interface Getter {
 	/**

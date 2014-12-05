@@ -31,13 +31,11 @@ import com.igame.framework.net.constant.LinkType;
 import com.igame.framework.net.constant.NetConstant;
 import com.igame.framework.net.constant.SessionKey;
 
-/**
- * @ClassName: MessageDecoder
- * @Package com.heygam.net.codec
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年3月5日 下午2:58:40
- * @Description: 解析出json字符串 并反序列化为java对象
- * @Version V1.0
+/**  
+ * @ClassName: HttpDecoder   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 下午12:04:05  
+ * @Description: TODO(这里用一句话描述这个类的作用)   
  */
 @Sharable
 public class HttpDecoder extends MessageToMessageDecoder<FullHttpRequest> {

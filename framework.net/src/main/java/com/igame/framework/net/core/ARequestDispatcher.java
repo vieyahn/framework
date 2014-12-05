@@ -17,11 +17,9 @@ import com.igame.framework.rpc.CommandManager;
 
 /**
  * @Title: ARequestDispatcher.java
- * @Package com.igame.framework.net.core
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年10月21日 下午2:19:31
  * @Description: 业务验证以及分发处理 可再次拓展成路由功能
- * @Version V1.0
  */
 public abstract class ARequestDispatcher<T> {
 	private static final Logger logger = LoggerFactory.getLogger(ARequestDispatcher.class);

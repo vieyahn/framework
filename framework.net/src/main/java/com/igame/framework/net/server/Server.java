@@ -5,11 +5,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @Title: Server.java
- * @Package com.igame.framework.net.server
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年10月20日 下午6:06:04
  * @Description: 服务器初始化
- * @Version V1.0
  */
 public abstract class Server implements Runnable {
 	private static final Logger log = LoggerFactory.getLogger(Server.class);

@@ -10,13 +10,11 @@ import org.springframework.util.ReflectionUtils;
 
 import com.igame.framework.basedb.annotation.CfgId;
 
-/**   
- * @Title: GetterBuilder.java
- * @Package com.igame.framework.basedb
- * @Author Allen allen.ime@gmail.com  
- * @Date 2014年9月29日 下午6:02:21
- * @Description: 取值生成器
- * @Version V1.0   
+/**  
+ * @ClassName: GetterBuilder   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:57:11  
+ * @Description: 取值生成器 
  */
 public class GetterBuilder {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GetterBuilder.class);

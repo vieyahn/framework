@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * @Title: ISqlSender.java
- * @Package com.igame.asyndb
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年6月3日 下午5:09:01
  * @Description: sql发送器

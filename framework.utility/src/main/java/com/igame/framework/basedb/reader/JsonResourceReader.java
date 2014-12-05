@@ -18,13 +18,11 @@ import org.springframework.util.ResourceUtils;
 import com.alibaba.fastjson.JSON;
 import com.igame.framework.basedb.ResourceReader;
 
-/**
- * @Title: JsonResourceReader.java
- * @Package com.igame.framework.basedb.reader
- * @Author Allen allen.ime@gmail.com
- * @Date 2014年9月29日 下午6:03:21
+/**  
+ * @ClassName: JsonResourceReader   
+ * @Author: Allen allen.ime@gmail.com  
+ * @Date: 2014年12月5日 上午11:58:55  
  * @Description: json数据读取
- * @Version V1.0
  */
 public class JsonResourceReader implements ResourceReader {
 	private static final Logger logger = LoggerFactory.getLogger(JsonResourceReader.class);

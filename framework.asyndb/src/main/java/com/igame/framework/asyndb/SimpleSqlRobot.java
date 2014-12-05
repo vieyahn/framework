@@ -1,3 +1,8 @@
+/** 
+ * 
+ * Copyright (c) 2014, allen.ime@gmail.com All Rights Reserved. 
+ * 
+ */
 package com.igame.framework.asyndb;
 
 import java.io.BufferedReader;
@@ -24,16 +29,16 @@ import org.slf4j.LoggerFactory;
 import com.igame.framework.asyndb.sender.ISqlSender;
 
 /**
- * @Title: SqlRobot2.java
+ * @Title: SimpleSqlRobot.java
  * @Package com.igame.framework.asyndb
  * @Author Allen allen.ime@gmail.com
  * @Date 2014年9月17日 下午12:08:33
- * @Description: 不会实时写文件
+ * @Description: 不会实时写文件但是停止的时候等待重新发送的数据会备份
  * @Version V1.0
  */
-public class SqlRobotSimple implements SqlRobot {
+public class SimpleSqlRobot implements SqlRobot {
 
-	private Logger logger = LoggerFactory.getLogger(SqlRobotSimple.class);
+	private Logger logger = LoggerFactory.getLogger(SimpleSqlRobot.class);
 
 	/**
 	 * 当前sql容器最大容量
@@ -146,7 +151,7 @@ public class SqlRobotSimple implements SqlRobot {
 		this.sqlSender = sqlSender;
 	}
 
-	public SqlRobotSimple() {
+	public SimpleSqlRobot() {
 		lock = new ReentrantLock(false);
 		sendMsg = new SendMsg(true, logger);
 		tryCache = new ConcurrentLinkedQueue<SqlsInfo>();
@@ -338,7 +343,6 @@ public class SqlRobotSimple implements SqlRobot {
 				Thread.sleep(2000);
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		logger.info("异步数据同步停止成功");
@@ -428,7 +432,7 @@ public class SqlRobotSimple implements SqlRobot {
 				} else {
 					sqlsInfo = tryCache.poll();
 				}
-				if (sqlsInfo == null) {
+				if (sqlsInfo == null) {// 全部提交完毕才会停机
 					if (isStopSender) {
 						break;
 					}

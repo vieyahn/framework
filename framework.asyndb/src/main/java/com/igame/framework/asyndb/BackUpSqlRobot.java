@@ -31,9 +31,9 @@ import com.igame.framework.asyndb.sender.ISqlSender;
  * @Description: sql管理器(每次都写文件备份)
  * @Version V1.0
  */
-public class SqlRobotOne implements SqlRobot{
+public class BackUpSqlRobot implements SqlRobot {
 
-	private Logger logger = LoggerFactory.getLogger(SqlRobotOne.class);
+	private Logger logger = LoggerFactory.getLogger(BackUpSqlRobot.class);
 
 	/**
 	 * 当前sql容器最大容量
@@ -136,7 +136,7 @@ public class SqlRobotOne implements SqlRobot{
 		this.sqlSender = sqlSender;
 	}
 
-	public SqlRobotOne() {
+	public BackUpSqlRobot() {
 		lock = new ReentrantLock(false);
 		sendMsg = new SendMsg(true, logger);
 		tryFile = new ConcurrentLinkedQueue<SqlsInfo>();

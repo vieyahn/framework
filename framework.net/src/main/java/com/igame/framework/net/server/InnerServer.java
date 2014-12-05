@@ -38,6 +38,8 @@ public abstract class InnerServer extends Server {
 
 	private static final Logger logger = LoggerFactory.getLogger(InnerServer.class);
 
+	ChannelFuture serverFuture;
+
 	// private int so_rcvbuf = 1024;
 	// private int so_sndbuf = 2 * 1024;
 
@@ -85,9 +87,9 @@ public abstract class InnerServer extends Server {
 			// Bind and start to accept incoming connections.
 			logger.info("======================= netty网络模块启动成功{} : {}，即将启动(绑定端口:{})  ===================", getServerName(), getServerId(), port);
 			// bootstrap.bind(port).sync().channel().closeFuture().sync();
-			ChannelFuture f = bootstrap.bind(port).sync();
+			serverFuture = bootstrap.bind(port).sync();
 			// Wait until the server socket is closed.
-			f.channel().closeFuture().sync();
+			serverFuture.channel().closeFuture().sync();
 
 		} catch (Exception e) {
 			logger.error("=========服务器启动失败 ", e);
@@ -96,6 +98,11 @@ public abstract class InnerServer extends Server {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
+	}
+
+	@Override
+	protected void stop() {
+		serverFuture.channel().close();
 	}
 
 	protected abstract void initChannelInner(SocketChannel ch) throws Exception;

@@ -20,7 +20,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
@@ -326,26 +328,35 @@ public class SimpleSqlRobot implements SqlRobot {
 	 * 
 	 * @return
 	 */
-	// 未执行完毕需要写文件
-	public boolean close() {
-		isStopReceive = true;
-		this.lock.lock();// 加锁
-		if (sqls.size() > 0) {
-			sendMsg(); // 发送
-			last_submit_time = System.currentTimeMillis();
-		}
-		isStopSender = true;
-		if (this.lock.isLocked() && this.lock.isHeldByCurrentThread())
-			this.lock.unlock(); // 释放锁
-		try {
-			while (!sendMsg.isFinish()) {
-				Thread.sleep(2000);
+	public FutureTask<Boolean> close() {
+		FutureTask<Boolean> result = new FutureTask<Boolean>(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				isStopReceive = true;
+				lock.lock();// 加锁
+				if (sqls.size() > 0) {
+					sendMsg(); // 发送
+					last_submit_time = System.currentTimeMillis();
+				}
+				isStopSender = true;
+				if (lock.isLocked() && lock.isHeldByCurrentThread())
+					lock.unlock(); // 释放锁
+
+				for (;;) {
+					if (sendMsg.isFinish()) {
+						break;
+					}
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				return true;
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		logger.info("异步数据同步停止成功");
-		return true;
+		});
+		new Thread(result).start();
+		return result;
 	}
 
 	private void sendMsg() {

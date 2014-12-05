@@ -1,6 +1,7 @@
 package com.igame.framework.asyndb;
 
 import java.util.List;
+import java.util.concurrent.FutureTask;
 
 /**
  * @ClassName: SqlRobot
@@ -21,7 +22,7 @@ public interface SqlRobot {
 	 * 
 	 * @return
 	 */
-	public boolean close();
+	public FutureTask<Boolean> close();
 
 	/**
 	 * 添加sql

@@ -10,12 +10,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
@@ -83,6 +86,8 @@ public class BackUpSqlRobot implements SqlRobot {
 	 * 保证新增sql安全
 	 */
 	public ReentrantLock lock;
+
+	private boolean isStoped = false;
 
 	/**
 	 * 备份文件前缀
@@ -318,7 +323,7 @@ public class BackUpSqlRobot implements SqlRobot {
 	 * 
 	 * @return
 	 */
-	public boolean close() {
+	public FutureTask<Boolean> close() {
 		this.lock.lock();// 加锁
 		if (sqls.size() > 0) {
 			sendMsg(); // 发送
@@ -326,7 +331,35 @@ public class BackUpSqlRobot implements SqlRobot {
 		}
 		if (this.lock.isLocked() && this.lock.isHeldByCurrentThread())
 			this.lock.unlock(); // 释放锁
-		return true;
+
+		FutureTask<Boolean> result = new FutureTask<Boolean>(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				lock.lock();// 加锁
+				if (sqls.size() > 0) {
+					sendMsg(); // 发送
+					last_submit_time = System.currentTimeMillis();
+				}
+				if (lock.isLocked() && lock.isHeldByCurrentThread())
+					lock.unlock(); // 释放锁
+
+				isStoped = true;
+
+				for (;;) {
+					if (sendMsg.getState() == State.TERMINATED) {
+						break;
+					}
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				return true;
+			}
+		});
+		new Thread(result).start();
+		return result;
 	}
 
 	private void sendMsg() {
@@ -419,6 +452,8 @@ public class BackUpSqlRobot implements SqlRobot {
 			logger.debug("启动 异步sql 消息发生发送线程  ");
 			long sleepTime = 300;
 			while (true) {
+				if (isStoped)
+					break;
 				try {
 					sleep(sleepTime);
 					// 如果重发队列不为空 那么所有非可重发线程都进行休眠

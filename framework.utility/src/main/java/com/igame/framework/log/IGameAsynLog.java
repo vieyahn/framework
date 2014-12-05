@@ -7,6 +7,8 @@
 package com.igame.framework.log;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
 import com.igame.framework.util.common.CircularDoubleBufferedList;
@@ -38,7 +40,9 @@ public abstract class IGameAsynLog<E> {
 
 	private CircularDoubleBufferedList<E> cache;
 
-	private boolean isStarted = true;
+	private boolean isStarted = true;// 是否开始
+	private boolean isStoped = false;// 是否停止
+
 	private Worker worker;
 
 	public IGameAsynLog() {
@@ -72,8 +76,26 @@ public abstract class IGameAsynLog<E> {
 		worker.start();
 	}
 
-	public void stop() {
+	public FutureTask<Boolean> stop() {
 		isStarted = false;
+		FutureTask<Boolean> result = new FutureTask<Boolean>(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				for (;;) {
+					if (isStoped) {
+						break;
+					}
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				return true;
+			}
+		});
+		new Thread(result).start();
+		return result;
 	}
 
 	class Worker extends Thread {
@@ -85,6 +107,7 @@ public abstract class IGameAsynLog<E> {
 						handler(objs);
 					} else {
 						if (!isStarted) {
+							isStoped = true;
 							break;
 						}
 						Thread.sleep(delay);

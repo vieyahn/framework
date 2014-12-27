@@ -2,11 +2,13 @@ package com.igame.framework.rpc;
 
 import java.lang.reflect.Method;
 
-/**  
- * @ClassName: CommandContext   
- * @Author: Allen allen.ime@gmail.com  
- * @Date: 2014年12月5日 下午12:01:44  
- * @Description: 指令码上下文  
+import com.igame.framework.net.session.Session;
+
+/**
+ * @ClassName: CommandContext
+ * @Author: Allen allen.ime@gmail.com
+ * @Date: 2014年12月5日 下午12:01:44
+ * @Description: 指令码上下文
  */
 public class CommandContext {
 
@@ -18,16 +20,6 @@ public class CommandContext {
 	 * 是否需要验证登录
 	 */
 	private boolean isToken;
-
-	/**
-	 * 是否是gm命令
-	 */
-	private boolean isGm;
-
-	/**
-	 * 外部是否可以调用
-	 */
-	private boolean outCall;
 
 	/**
 	 * 处理类
@@ -47,6 +39,16 @@ public class CommandContext {
 	 * 请求数据类
 	 */
 	private Class<?> requestClass;
+
+	/**
+	 * 反射执行
+	 * @param session
+	 * @param params
+	 * @throws Exception
+	 */
+	public void invoke(Session session, Object params) throws Exception {
+		this.method.invoke(executor, session, params);
+	}
 
 	public int getCommand() {
 		return command;
@@ -94,22 +96,6 @@ public class CommandContext {
 
 	public void setQueue(int queue) {
 		this.queue = queue;
-	}
-
-	public boolean isGm() {
-		return isGm;
-	}
-
-	public void setGm(boolean isGm) {
-		this.isGm = isGm;
-	}
-
-	public boolean isOutCall() {
-		return outCall;
-	}
-
-	public void setOutCall(boolean outCall) {
-		this.outCall = outCall;
 	}
 
 }

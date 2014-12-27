@@ -81,8 +81,6 @@ public class CommandManager implements ApplicationContextAware {
 							commandContext.setCommand(bindCommand.value());
 							commandContext.setQueue(bindCommand.queue());
 							commandContext.setToken(bindCommand.isToken());
-							commandContext.setGm(bindCommand.isGm());
-							commandContext.setOutCall(bindCommand.outCall());
 							commandContext.setExecutor(executor);
 							commandContext.setMethod(method);
 							commandContext.setRequestClass(reqClass);

@@ -23,8 +23,6 @@ public class CommandValidatedHandler<T> implements IRequestHandler<T> {
 	@Override
 	public void execute(Channel channel, T message, CommandContext commandContext) {
 		logger.debug("=============命令码登录校验 CommandValidatedService ====== ");
-		if (!commandContext.isOutCall())
-			throw new SecurityException("exception.illegal.operation");
 		if (commandContext.isToken()) {// 需要验证是否登录
 			if (channel.attr(SessionKey.TOKEN).get() == null) {
 				logger.debug("========== 用户未登录，请登录... 命令码:" + commandContext.getCommand() + " ============ ");

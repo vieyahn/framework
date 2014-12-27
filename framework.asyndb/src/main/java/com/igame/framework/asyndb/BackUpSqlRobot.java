@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -323,7 +324,7 @@ public class BackUpSqlRobot implements SqlRobot {
 	 * 
 	 * @return
 	 */
-	public FutureTask<Boolean> close() {
+	public FutureTask<Boolean> stop(final CountDownLatch latch) {
 		this.lock.lock();// 加锁
 		if (sqls.size() > 0) {
 			sendMsg(); // 发送
@@ -347,6 +348,10 @@ public class BackUpSqlRobot implements SqlRobot {
 
 				for (;;) {
 					if (sendMsg.getState() == State.TERMINATED) {
+						if (latch != null) {
+							latch.countDown();
+						}
+						logger.info("sql系统停止完毕");
 						break;
 					}
 					try {

@@ -13,7 +13,7 @@ import com.lmax.disruptor.WorkHandler;
  * @Description: 异步执行队列
  */
 public class DisruptorDispatcher extends ADisruptorDispatcher {
-	private static final Logger logger = LoggerFactory.getLogger(DisruptorDispatcher.class);
+	private static final Logger logger = LoggerFactory.getLogger("disruptor");
 
 	public DisruptorDispatcher() {
 		this(1, null);
@@ -29,7 +29,7 @@ public class DisruptorDispatcher extends ADisruptorDispatcher {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void init(int thread_size) {
+	protected void init(int thread_size) {
 		disruptor.handleExceptionsWith(new ExceptionHandler() {
 			@Override
 			public void handleEventException(Throwable ex, long sequence, Object event) {
@@ -53,7 +53,7 @@ public class DisruptorDispatcher extends ADisruptorDispatcher {
 			}
 		});
 
-		if (thread_size < 2) {
+		if (thread_size == 1) {
 			disruptor.handleEventsWith(new MessageEventBatchHandler());
 		} else {
 			WorkHandler<Event>[] handlers = new MessageEventHandler[thread_size];

@@ -1,6 +1,7 @@
 package com.igame.framework.asyndb;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 
 /**
@@ -22,7 +23,7 @@ public interface SqlRobot {
 	 * 
 	 * @return
 	 */
-	public FutureTask<Boolean> close();
+	public FutureTask<Boolean> stop(CountDownLatch latch);
 
 	/**
 	 * 添加sql

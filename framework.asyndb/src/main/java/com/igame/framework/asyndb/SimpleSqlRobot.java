@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +23,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -264,7 +266,6 @@ public class SimpleSqlRobot implements SqlRobot {
 		}
 
 		sendThreadStart();
-		logger.info("=================== 数据库同步启动成功 =========================");
 	}
 
 	public void deleteFele(File deleteFile) {
@@ -328,7 +329,7 @@ public class SimpleSqlRobot implements SqlRobot {
 	 * 
 	 * @return
 	 */
-	public FutureTask<Boolean> close() {
+	public FutureTask<Boolean> stop(final CountDownLatch latch) {
 		FutureTask<Boolean> result = new FutureTask<Boolean>(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
@@ -343,7 +344,11 @@ public class SimpleSqlRobot implements SqlRobot {
 					lock.unlock(); // 释放锁
 
 				for (;;) {
-					if (sendMsg.isFinish()) {
+					if (sendMsg.getState() == State.TERMINATED) {
+						if (latch != null) {
+							latch.countDown();
+						}
+						logger.info("sql系统停止完毕");
 						break;
 					}
 					try {
@@ -398,11 +403,11 @@ public class SimpleSqlRobot implements SqlRobot {
 	 */
 	private class SendMsg extends Thread {
 
-		private boolean isFinish = false;
+//		private boolean isFinish = false;
 
-		public boolean isFinish() {
-			return isFinish;
-		}
+//		public boolean isFinish() {
+//			return isFinish;
+//		}
 
 		/**
 		 * 标示是否为可重发线程
@@ -417,7 +422,7 @@ public class SimpleSqlRobot implements SqlRobot {
 		}
 
 		public void run() {
-			logger.debug("启动 异步sql 消息发生发送线程  ");
+			logger.debug(" ==> ==> 启动异步sql消息发送线程  ");
 			long sleepTime = 300;
 			while (true) {
 				try {
@@ -499,7 +504,7 @@ public class SimpleSqlRobot implements SqlRobot {
 				}
 
 			}
-			isFinish = true;
+//			isFinish = true;
 			logger.info("备份数据成功！");
 		}
 	}

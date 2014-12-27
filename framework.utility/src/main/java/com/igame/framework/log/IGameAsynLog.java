@@ -6,10 +6,15 @@
 
 package com.igame.framework.log;
 
+import java.lang.Thread.State;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.igame.framework.util.common.CircularDoubleBufferedList;
 
@@ -20,6 +25,7 @@ import com.igame.framework.util.common.CircularDoubleBufferedList;
  * @Description: 异步日志
  */
 public abstract class IGameAsynLog<E> {
+	private static final Logger log = LoggerFactory.getLogger(IGameAsynLog.class);
 
 	/**
 	 * @Fields DEFAULT_WRITECOUNT : 每次提交默认数量(可能会稍微大点)
@@ -33,7 +39,7 @@ public abstract class IGameAsynLog<E> {
 	/**
 	 * @Fields DEFAULT_DELAY : 默认提交间隔时间
 	 */
-	private static final long DEFAULT_DELAY = 3000;
+	private static final long DEFAULT_DELAY = 300;
 	private long delay = 3000;
 
 	private String log_name;
@@ -41,7 +47,7 @@ public abstract class IGameAsynLog<E> {
 	private CircularDoubleBufferedList<E> cache;
 
 	private boolean isStarted = true;// 是否开始
-	private boolean isStoped = false;// 是否停止
+	// private boolean isStoped = false;// 是否停止
 
 	private Worker worker;
 
@@ -61,7 +67,7 @@ public abstract class IGameAsynLog<E> {
 		this.log_name = log_name;
 		this.delay = unit.toMillis(delay);
 		cache = new CircularDoubleBufferedList<E>(writeCount);
-		start();
+		// start();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -76,13 +82,17 @@ public abstract class IGameAsynLog<E> {
 		worker.start();
 	}
 
-	public FutureTask<Boolean> stop() {
+	public FutureTask<Boolean> stop(final CountDownLatch latch) {
 		isStarted = false;
 		FutureTask<Boolean> result = new FutureTask<Boolean>(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
 				for (;;) {
-					if (isStoped) {
+					if (worker.getState() == State.TERMINATED) {
+						if (latch != null) {
+							latch.countDown();
+						}
+						log.info("日志系统停止完毕");
 						break;
 					}
 					try {
@@ -100,6 +110,7 @@ public abstract class IGameAsynLog<E> {
 
 	class Worker extends Thread {
 		public void run() {
+			log.debug(" ==> ==> 启动异步操作日志消息发送线程  ");
 			while (true) {
 				try {
 					List<E> objs = cache.poll();
@@ -107,7 +118,7 @@ public abstract class IGameAsynLog<E> {
 						handler(objs);
 					} else {
 						if (!isStarted) {
-							isStoped = true;
+							// isStoped = true;
 							break;
 						}
 						Thread.sleep(delay);

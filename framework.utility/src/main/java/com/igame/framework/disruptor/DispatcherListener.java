@@ -14,10 +14,6 @@ public interface DispatcherListener {
 	 */
 	boolean alive();
 
-	/**
-	 * 初始化处理
-	 */
-	void init(int thread_size);
 
 	/**
 	 * 停止任务调度（阻塞直到所有提交任务完成）

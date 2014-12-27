@@ -44,7 +44,7 @@ public abstract class ARequestDispatcher<T> {
 				throw new UnsupportedMessageTypeException("404 请求命令 码不存在");
 			}
 
-			// 循序执行自定义handler
+			// 循序执行自定义handler 有点后悔，网络层是否不应该做一些登录校验的操作?
 			Iterator<IRequestHandler<T>> it = dispatchServices.iterator();
 			while (it.hasNext()) {
 				it.next().execute(channel, message, commandContext);

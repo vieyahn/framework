@@ -102,34 +102,4 @@ public final class SessionCache {
 		return cache.asMap().entrySet();
 	}
 
-	public static void main(String[] args) throws InterruptedException {
-		long uid = 1111;
-		Session session = new Session(null);
-		session.setToken("111");
-
-		long uid2 = 3333;
-		Session session2 = new Session(null);
-		session2.setToken("3333");
-
-		System.out.println(get(uid));
-		cache.put(uid, session);
-		System.out.println(get(uid));
-
-		cache.put(uid2, session2);
-		System.out.println(get(uid2));
-		clear();
-
-		// System.out.println("==" + cache.get(uid));
-		// cache.remove(uid);
-		// System.out.println(cache.isEmpty());
-		// cache.getAll();
-		// cache.keySet();
-		// cache.values();
-
-		// Thread.sleep(4000);
-		// System.out.println("+++++++++++");
-		// cache.cleanUp();
-		// System.out.println("============");
-		// System.out.println(cache.get(uid));
-	}
 }

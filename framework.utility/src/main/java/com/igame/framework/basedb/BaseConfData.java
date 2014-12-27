@@ -54,7 +54,6 @@ public class BaseConfData {
 				}
 			}
 		}
-		logger.info("初始化基本数据成功");
 	}
 
 	public void toDb(Class<?> confClass, Collection<?> values) throws Exception {

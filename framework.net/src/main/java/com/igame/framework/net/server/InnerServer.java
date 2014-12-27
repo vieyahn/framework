@@ -45,7 +45,7 @@ public abstract class InnerServer extends Server {
 
 	public void run() {
 		super.run();
-		logger.info("InnerServer start --> port:{}, timeoutSeconds:{}, nThreads{}", port, timeoutSeconds, nThreads);
+//		logger.info("InnerServer start --> port:{}, timeoutSeconds:{}, nThreads{}", port, timeoutSeconds, nThreads);
 		/**
 		 * Socket选项： TCP_NODELAY：是否立即发送数据，Negale算法，发送大批量数据，并且接收端及时响应的情况下很有用， 如果是发送少量数据并且接收端不及时响应则会严重降低性能 ，采用该算法将把发送数据缓冲起来到一定大小后一次性发出，等待接收端响应后再发送下一批数据。
 		 * 默认false采用该算法。
@@ -85,9 +85,9 @@ public abstract class InnerServer extends Server {
 						}
 					});
 			// Bind and start to accept incoming connections.
-			logger.info("======================= netty网络模块启动成功{} : {}，即将启动(绑定端口:{})  ===================", getServerName(), getServerId(), port);
 			// bootstrap.bind(port).sync().channel().closeFuture().sync();
 			serverFuture = bootstrap.bind(port).sync();
+			logger.info("=======================网络模块 [{}:{}] 启动完毕, 端口:{})  ===================", getServerName(), getServerId(), port);
 			// Wait until the server socket is closed.
 			serverFuture.channel().closeFuture().sync();
 

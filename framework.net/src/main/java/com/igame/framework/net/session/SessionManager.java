@@ -21,27 +21,37 @@ public class SessionManager {
 	private static final Logger logger = LoggerFactory.getLogger(SessionManager.class);
 
 	/**
+	 * 初始化一个sesson
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param channel
+	 * @return
+	 */
+	public static Session getInstance(Channel channel) {
+		return Session.getInstance(channel);
+	}
+
+	/**
 	 * 初始化session
 	 * 
 	 * @param session
 	 * @param userID
 	 * @return
 	 */
-	public static Session init(Session session, long userID) {
-		session.setUserId(userID);
+	public static Session add(Session session, long userID) {
 		String token = new StringBuffer().append(userID).append("_").append(System.currentTimeMillis()).toString();
 		try {
 			token = SecretUtil.md5Encryption(token);
 		} catch (NoSuchAlgorithmException e) {
 			logger.error("Session init error ", e);
 		}
-		session.setToken(token);
 
-		session.bind();
-		Session oldSession = SessionCache.get(userID);
-		if (oldSession != null) {
-			oldSession.unbind();
-		}
+		// 如果存在oldSession cache会处理
+		// Session oldSession = SessionCache.get(userID);
+		// if (oldSession != null) {
+		// oldSession.unbind();
+		// }
+
+		session.bind(token, userID);
 		SessionCache.put(userID, session);
 		return session;
 	}
@@ -57,16 +67,11 @@ public class SessionManager {
 		logger.debug("============= SessionManager reconnect  重连 ====== ");
 		Session session = SessionCache.get(token);
 		if (session != null) {
-			// 销毁之前的管道
-			session.unbind();
-			Session session2 = new Session(channel);
-			long userId = session.getUserId();
-			session2.setUserId(userId);
-			session2.setToken(token);
-			// 重新绑定管道
-			session2.bind(channel);
-			SessionCache.put(userId, session2);
-			return session2;
+			boolean flag = session.bind(channel, token);
+			if (!flag) {
+				throw new ReLoginException("user.reconnet.error");
+			}
+			return session;
 		} else {
 			throw new ReLoginException("user.reconnet.error");
 		}

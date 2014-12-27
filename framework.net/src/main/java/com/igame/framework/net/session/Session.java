@@ -24,24 +24,48 @@ public class Session extends DefaultAttributeMap implements Serializable {
 	// when channel close?
 	// private Notifier notifier; // 通知/事物驱动
 
-	// TODO 重连有待完善
-	public Session(Channel channel) {
+	public static Session getInstance(Channel channel) {
+		return new Session(channel);
+	}
+
+	// 初始化session
+	private Session(Channel channel) {
 		this.ioSession = channel;
 		ioSession.attr(SessionKey.CONNECT_TIME).set(System.currentTimeMillis());
 	}
 
-	public void bind(Channel channel) {
+	/**
+	 * 重连绑定
+	 */
+	public boolean bind(Channel channel, String token) {
+		Long userId = attr(SessionKey.USERID).get();
+		if (token == null || userId == null) {
+			return false;
+		}
+		if (this.ioSession != null && this.ioSession.isActive()) {
+			unbind();
+			ioSession.close();
+		}
 		this.ioSession = channel;
 		ioSession.attr(SessionKey.CONNECT_TIME).set(System.currentTimeMillis());
-		bind();
+		ioSession.attr(SessionKey.TOKEN).set(token);
+		ioSession.attr(SessionKey.USERID).set(userId);
+		return true;
 	}
 
-	public void bind() {
+	/**
+	 * 登录成功绑定
+	 */
+	public void bind(String token, long userId) {
 		// 初始化管道内信息
-		ioSession.attr(SessionKey.TOKEN).set(getToken());
-		ioSession.attr(SessionKey.USERID).set(getUserId());
+		attr(SessionKey.USERID).set(userId);
+		ioSession.attr(SessionKey.TOKEN).set(token);
+		ioSession.attr(SessionKey.USERID).set(userId);
 	}
 
+	/**
+	 * 是否登录
+	 */
 	public boolean isLogin() {
 		if (ioSession.attr(SessionKey.USERID).get() != null) {
 			return false;
@@ -51,21 +75,9 @@ public class Session extends DefaultAttributeMap implements Serializable {
 	}
 
 	/**
-	 * 重新初始化session
-	 * 
-	 * @param channel
-	 */
-	// public void reInit(Channel channel) {
-	// this.ioSession = channel;
-	// ioSession.attr(SessionKey.CONNECT_TIME).set(System.currentTimeMillis());
-	// String token = getToken();
-	// ioSession.attr(SessionKey.TOKEN).set(token);
-	// }
-
-	/**
 	 * 取消用户绑定
 	 */
-	public void unbind() {
+	public void unbind() {// 注销管道，此后就算关闭，由于没有绑定userid，断线也不会处理
 		if (ioSession != null && ioSession.isActive()) {
 			ioSession.attr(SessionKey.TOKEN).remove();
 			ioSession.attr(SessionKey.USERID).remove();
@@ -78,32 +90,21 @@ public class Session extends DefaultAttributeMap implements Serializable {
 		return ioSession;
 	}
 
-	// public void setIoSession(Channel ioSession) {
-	// this.ioSession = ioSession;
-	// }
-
 	public long getUserId() {
-		// Attribute<Long> attribute = attr(SessionKey.USERID);
-		// if (attribute != null)
 		return attr(SessionKey.USERID).get();
-		// else
-		// return 0;
 	}
 
-	public void setUserId(long userId) {
-		// this.ioSession.attr(SessionKey.USERID).set(userId);
-		this.attr(SessionKey.USERID).set(userId);
-	}
+	// public void setUserId(long userId) {
+	// // this.ioSession.attr(SessionKey.USERID).set(userId);
+	// this.attr(SessionKey.USERID).set(userId);
+	// }
 
 	public String getToken() {
 		return attr(SessionKey.TOKEN).get();
 	}
 
-	public void setToken(String token) {
-		attr(SessionKey.TOKEN).set(token);
-		// if (ioSession != null) {
-		// ioSession.attr(SessionKey.TOKEN).set(token);
-		// }
-	}
+	// public void setToken(String token) {
+	// attr(SessionKey.TOKEN).set(token);
+	// }
 
 }

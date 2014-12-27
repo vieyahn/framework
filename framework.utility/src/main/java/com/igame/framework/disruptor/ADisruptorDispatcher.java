@@ -3,7 +3,6 @@ package com.igame.framework.disruptor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -24,16 +23,19 @@ import com.lmax.disruptor.dsl.ProducerType;
  * @Description: 任务分发接口
  */
 public abstract class ADisruptorDispatcher implements DispatcherListener {
-	public static final Logger logger = LoggerFactory.getLogger(ADisruptorDispatcher.class);
+	public static final Logger logger = LoggerFactory.getLogger("disruptor");
+
 	/** 缓存区大小 */
 	public static final int BUFFER_SIZE = 1024;
 	/** 消费者数量 */
 	public static final int DEFAULT_IO_THREADS = Runtime.getRuntime().availableProcessors() * 2;
 
+	/**
+	 * 是否分发消息
+	 */
 	private final AtomicBoolean alive = new AtomicBoolean(true);
 
 	protected final Disruptor<Event> disruptor;
-	protected final ExecutorService executor;
 	/**
 	 * 核心，绝大多数功能都委托给ringBuffer处理
 	 */
@@ -73,10 +75,13 @@ public abstract class ADisruptorDispatcher implements DispatcherListener {
 				return t;
 			}
 		};
-
-		if (thread_size < 2) {
+		ExecutorService executor;
+		if (thread_size == 1) {
 			executor = Executors.newSingleThreadExecutor(threadFactory);
 		} else {
+			if (thread_size <= 0) {
+				thread_size = DEFAULT_IO_THREADS;
+			}
 			executor = Executors.newFixedThreadPool(DEFAULT_IO_THREADS, threadFactory);
 		}
 
@@ -91,6 +96,11 @@ public abstract class ADisruptorDispatcher implements DispatcherListener {
 
 		ringBuffer = disruptor.start();
 	}
+
+	/**
+	 * 初始化处理
+	 */
+	protected abstract void init(int thread_size);
 
 	/**
 	 * 任务分发
@@ -121,12 +131,8 @@ public abstract class ADisruptorDispatcher implements DispatcherListener {
 
 	@Override
 	public boolean awaitAndShutdown() {
+		alive.compareAndSet(true, false);
 		disruptor.shutdown();
-		try {
-			executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			logger.error("awaitAndShutdown error", e);
-		}
 		return false;
 	}
 
@@ -134,7 +140,6 @@ public abstract class ADisruptorDispatcher implements DispatcherListener {
 	public void halt() {
 		alive.compareAndSet(true, false);
 		disruptor.halt();
-		executor.shutdown();
 	}
 
 }

@@ -1,10 +1,13 @@
 package com.igame.framework.rpc;
 
+import io.netty.util.internal.StringUtil;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -13,13 +16,14 @@ import org.springframework.context.ApplicationContextAware;
 
 import com.igame.framework.rpc.annotation.BindCommand;
 import com.igame.framework.rpc.annotation.CommandWorker;
+import com.igame.framework.rpc.filter.IFilter;
 import com.igame.framework.util.common.PackageUtility;
 
-/**  
- * @ClassName: CommandManager   
- * @Author: Allen allen.ime@gmail.com  
- * @Date: 2014年12月5日 下午12:01:58  
- * @Description: 指令码管理器  
+/**
+ * @ClassName: CommandManager
+ * @Author: Allen allen.ime@gmail.com
+ * @Date: 2014年12月5日 下午12:01:58
+ * @Description: 指令码管理器
  */
 public class CommandManager implements ApplicationContextAware {
 	private static final Logger log = LoggerFactory.getLogger(CommandManager.class);
@@ -70,12 +74,13 @@ public class CommandManager implements ApplicationContextAware {
 								throw new IllegalArgumentException("未登录状态可以访问的指令不能指定线程策略为-1");
 							}
 							Class<?>[] classes2 = method.getParameterTypes();
-							if (classes2 == null || classes2.length!=2) {
+							if (classes2 == null || classes2.length != 2) {
 								StringBuilder sd = new StringBuilder();
 								sd.append("方法参数不匹配 ").append(bindCommand.value()).append(":");
 								sd.append(clazz.getClass()).append("#").append(method.getName());
 								throw new IllegalArgumentException(sd.toString());
 							}
+
 							Class<?> reqClass = (Class<?>) method.getParameterTypes()[1];
 							CommandContext commandContext = new CommandContext();
 							commandContext.setCommand(bindCommand.value());
@@ -84,6 +89,22 @@ public class CommandManager implements ApplicationContextAware {
 							commandContext.setExecutor(executor);
 							commandContext.setMethod(method);
 							commandContext.setRequestClass(reqClass);
+
+							// 过滤器，暂时还没有
+							String[] strFilters = bindCommand.filters();
+							if (strFilters != null) {
+								String fname;
+								IFilter filter;
+								Class<?> filterClazz;
+								IFilter[] filters = new IFilter[strFilters.length];
+								for (int i = 0; i < strFilters.length; i++) {
+									fname = strFilters[i];
+									filterClazz = Class.forName(fname);
+									filter = (IFilter) filterClazz.newInstance();
+									filters[i] = filter;
+								}
+								commandContext.setFilters(filters);
+							}
 							commandToMethod.put(bindCommand.value(), commandContext);
 						}
 					}
@@ -103,7 +124,11 @@ public class CommandManager implements ApplicationContextAware {
 		if (commandToMethod == null) {
 			throw new IllegalArgumentException("rpc 容器未初始化");
 		}
-		return commandToMethod.get(id);
+		CommandContext context = commandToMethod.get(id);
+		if (context == null) {
+			throw new NullPointerException("指令码不存在!");
+		}
+		return context;
 	}
 
 	public void setPackageName(String packageName) {

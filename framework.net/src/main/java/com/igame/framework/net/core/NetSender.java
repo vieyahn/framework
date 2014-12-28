@@ -21,8 +21,12 @@ public class NetSender {
 	 * @param response
 	 */
 	public static void sendMessage(Channel channel, Object response) {
-		channel.writeAndFlush(response);
-		logger.debug(" ================== NetSender 发送下行 消息成功 ==================== ");
+		if (channel == null || channel.isActive()) {
+			logger.debug(" ================== NetSender 发送失败 管道不存在 ==================== ");
+		} else {
+			channel.writeAndFlush(response);
+			logger.debug(" ================== NetSender 发送下行 消息成功 ==================== ");
+		}
 	}
 
 }

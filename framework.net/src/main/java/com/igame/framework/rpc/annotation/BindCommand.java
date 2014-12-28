@@ -30,16 +30,11 @@ public @interface BindCommand {
 	boolean isToken() default true;
 
 	/**
-	 * 外部调用
-	 * 
-	 * @return
-	 */
-	boolean outCall() default true;
-
-	/**
 	 * 是否是GM命令
 	 * 
 	 * @return
 	 */
 	boolean isGm() default false;
+
+	String[] filters() default {"com.igame.extend.rpc.filter.ConnectFilter"};
 }

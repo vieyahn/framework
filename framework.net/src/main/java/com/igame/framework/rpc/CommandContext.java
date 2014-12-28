@@ -3,6 +3,7 @@ package com.igame.framework.rpc;
 import java.lang.reflect.Method;
 
 import com.igame.framework.net.session.Session;
+import com.igame.framework.rpc.filter.IFilter;
 
 /**
  * @ClassName: CommandContext
@@ -41,12 +42,24 @@ public class CommandContext {
 	private Class<?> requestClass;
 
 	/**
+	 * 过滤器们
+	 */
+	private IFilter[] filters ;
+
+	/**
 	 * 反射执行
 	 * @param session
 	 * @param params
 	 * @throws Exception
 	 */
 	public void invoke(Session session, Object params) throws Exception {
+
+		if (filters != null) {
+			for (IFilter iFilter : filters) {
+				iFilter.doFilter(session, this, params);
+			}
+		}
+
 		this.method.invoke(executor, session, params);
 	}
 
@@ -96,6 +109,14 @@ public class CommandContext {
 
 	public void setQueue(int queue) {
 		this.queue = queue;
+	}
+
+	public IFilter[] getFilters() {
+		return filters;
+	}
+
+	public void setFilters(IFilter[] filters) {
+		this.filters = filters;
 	}
 
 }

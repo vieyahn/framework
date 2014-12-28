@@ -15,6 +15,11 @@ import com.igame.framework.net.constant.SessionKey;
  */
 public class Session extends DefaultAttributeMap implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * session id
+	 */
+	private long id;
+
 	private Channel ioSession;
 
 	// 缓存消息队列(他人操作下发的消息)TODO 线程操作同步
@@ -30,8 +35,9 @@ public class Session extends DefaultAttributeMap implements Serializable {
 
 	// 初始化session
 	private Session(Channel channel) {
+		this.id = System.currentTimeMillis();// channel.id
 		this.ioSession = channel;
-		ioSession.attr(SessionKey.CONNECT_TIME).set(System.currentTimeMillis());
+		ioSession.attr(SessionKey.CONNECT_TIME).set(id);
 	}
 
 	/**
@@ -47,7 +53,8 @@ public class Session extends DefaultAttributeMap implements Serializable {
 			ioSession.close();
 		}
 		this.ioSession = channel;
-		ioSession.attr(SessionKey.CONNECT_TIME).set(System.currentTimeMillis());
+		this.id = System.currentTimeMillis();// channel.id
+		ioSession.attr(SessionKey.CONNECT_TIME).set(id);
 		ioSession.attr(SessionKey.TOKEN).set(token);
 		ioSession.attr(SessionKey.USERID).set(userId);
 		return true;
@@ -67,6 +74,9 @@ public class Session extends DefaultAttributeMap implements Serializable {
 	 * 是否登录
 	 */
 	public boolean isLogin() {
+		if (ioSession == null || !ioSession.isActive()) {
+			return false;
+		}
 		if (ioSession.attr(SessionKey.USERID).get() != null) {
 			return false;
 		} else {
@@ -81,6 +91,7 @@ public class Session extends DefaultAttributeMap implements Serializable {
 		if (ioSession != null && ioSession.isActive()) {
 			ioSession.attr(SessionKey.TOKEN).remove();
 			ioSession.attr(SessionKey.USERID).remove();
+			this.id = 0;
 			ioSession.close();
 		}
 		ioSession = null;
@@ -101,6 +112,14 @@ public class Session extends DefaultAttributeMap implements Serializable {
 
 	public String getToken() {
 		return attr(SessionKey.TOKEN).get();
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	// public void setToken(String token) {

@@ -1,7 +1,6 @@
 package com.igame.framework.net.core;
 
 import io.netty.channel.Channel;
-import io.netty.handler.codec.UnsupportedMessageTypeException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,8 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import com.igame.framework.net.exception.handler.IExceptionHadler;
 import com.igame.framework.net.handler.IRequestHandler;
-import com.igame.framework.rpc.CommandContext;
-import com.igame.framework.rpc.CommandManager;
 
 /**
  * @Title: ARequestDispatcher.java
@@ -39,15 +36,15 @@ public abstract class ARequestDispatcher<T> {
 		logger.debug(" =========== 服务器收到消息 开始分发 requestType = " + commandCode + " ======= ");
 		/** 获取指令码上下文信息 */
 		try {
-			CommandContext commandContext = CommandManager.getCommandContext(commandCode);
-			if (commandContext == null) {
-				throw new UnsupportedMessageTypeException("404 请求命令 码不存在");
-			}
+//			CommandContext commandContext = CommandManager.getCommandContext(commandCode);
+//			if (commandContext == null) {
+//				throw new UnsupportedMessageTypeException("404 请求命令 码不存在");
+//			}
 
 			// 循序执行自定义handler 有点后悔，网络层是否不应该做一些登录校验的操作?
 			Iterator<IRequestHandler<T>> it = dispatchServices.iterator();
 			while (it.hasNext()) {
-				it.next().execute(channel, message, commandContext);
+				it.next().execute(channel, message);
 			}
 		} catch (Exception e) {// 其他异常处理
 			exceptionHadler.excute(commandCode, e, channel);

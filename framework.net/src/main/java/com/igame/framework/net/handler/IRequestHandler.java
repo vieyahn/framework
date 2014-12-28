@@ -13,6 +13,6 @@ import com.igame.framework.rpc.CommandContext;
  */
 
 public interface IRequestHandler<T> {
-	public void execute(final Channel channel, T message, CommandContext commandContext) throws Exception;
+	public void execute(final Channel channel, T message) throws Exception;
 
 }

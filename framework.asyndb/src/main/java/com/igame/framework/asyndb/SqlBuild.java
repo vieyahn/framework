@@ -1,5 +1,6 @@
 package com.igame.framework.asyndb;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +15,6 @@ import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.igame.framework.util.common.DateUtil;
 
 /**
  * @ClassName: SqlBuild
@@ -78,7 +77,6 @@ public class SqlBuild {
 			for (int i = 0; i < parameterArray.length; i++) {
 				index = sqlbuff.indexOf(REGEX);
 				if (index > -1) {
-
 					if (parameterArray[i] instanceof Integer)
 						sqlbuff.replace(index, index + 1, parameterArray[i].toString());
 					else if (parameterArray[i] instanceof Float)
@@ -87,9 +85,10 @@ public class SqlBuild {
 						sqlbuff.replace(index, index + 1, parameterArray[i].toString());
 					else if (parameterArray[i] instanceof Long)
 						sqlbuff.replace(index, index + 1, parameterArray[i].toString());
-					else if (parameterArray[i] instanceof Date)
-						sqlbuff.replace(index, index + 1, new StringBuffer().append("'").append(DateUtil.formatDate((Date) parameterArray[i], DateUtil.DAY_HOUR_FORMAT_STRING)).append("'").toString());
-					else {
+					else if (parameterArray[i] instanceof Date) {
+						SimpleDateFormat dateformat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						sqlbuff.replace(index, index + 1, new StringBuffer().append("'").append(dateformat1.format(parameterArray[i])).append("'").toString());
+					} else {
 						if (parameterArray[i] == null) {
 							sqlbuff.replace(index, index + 1, "null");
 						} else {

@@ -18,6 +18,7 @@ public class ThreadQueueMessage {
 		QueueMessage msg = qms.get();
 		if (msg != null) {
 			sqls = msg.flush();
+			remove();
 		}
 		return sqls;
 	}

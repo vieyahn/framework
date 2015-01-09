@@ -21,10 +21,7 @@ public class QueueMessage {
 	public List<String> flush() {
 		if (sqls.isEmpty())
 			return null;
-
-		List<String> _sqls = sqls;
-		sqls = new ArrayList<String>();
-		return _sqls;
+		return sqls;
 	}
 
 	public void addSqls(String sql) {
